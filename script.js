@@ -4,7 +4,17 @@ const weatherResult = document.getElementById("weatherResult");
 
 searchBtn.addEventListener("click", function() {
     const city = cityInput.value;
+
+    //check if its empty
+    if(city===""){
+        weatherResult.textContent = "Please enter a city";
+        return;
+    }
     
-    // for now just show city name (test)
-    weatherResult.textContent = "Searching for: " + city;
+    // fake data for now 
+    const temperatur = 25;
+    const condition = "Sunny";
+
+    weatherResulte.textContent = 
+        "Weather in " + city + ": " + temperatur + "°C, " + condition;
 });

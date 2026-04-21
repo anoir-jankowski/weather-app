@@ -7,7 +7,7 @@ const apiKey = "c422c5dbd472f674d49215745cf062be";
 searchBtn.addEventListener("click", function() {
     const city = cityInput.value.trim();
 
-    //check if its empty
+    //check if input is empty
     if(city===""){
         weatherResult.textContent = "Please enter a city";
         return;
@@ -31,13 +31,23 @@ searchBtn.addEventListener("click", function() {
                 result;
             }
 
+            // improve UX
             const temperatur = data.main.temp;
             const condition = data.weather[0].main;
 
             weatherResult.textContent = 
                 "Weather in " + city + ": " + temperature + "°C, " + condition;
+
+            cityInput.value = "";
+            cityInput.focus();
         })
         .catch(function () {
             weatherResult.textContent = "Error fetching data";
         });
+
+  // allow Enter key to trigger search
+  cityInput.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+          searchBtn.click();
+      }
 });

@@ -7,14 +7,27 @@ body {
 .weather-app {
     max-width: 300px;
     margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
 }
 
 input {
     padding: 10px;
     margin: 10px;
+    width: 80%;
 }
 
 button {
     padding: 10px;
     cursor: pointer;
+}
+
+#weatherResult {
+    margin-top: 20px;
+}
+
+#weatherResult p {
+    margin: 5px 0;
+    font-size: 18px;
 }

@@ -5,6 +5,7 @@ const statusText = document.getElementById("status");
 const cityName = document.getElementById("cityName");
 const temperatureEl = document.getElementById("temperature");
 const conditionEl = document.getElementById("condition");
+const weatherIcon = documt.getElementById("weatherIcon");
 
 const apiKey = "c422c5dbd472f674d49215745cf062be";
 
@@ -14,9 +15,11 @@ searchBtn.addEventListener("click", function() {
     //check if input is empty
     if(city===""){
         statusText.textContent = "Please enter a city";
+        weatherIcon.src = ""; // clear icon 
         return;
     }
     statusText.textContent = "Loading...";
+    weatherIcon.src = ""; // reset icon while loading 
 
     // API URL
     const url = "https://api.openweathermap.org/data/2.5/weather?q="
@@ -29,19 +32,27 @@ searchBtn.addEventListener("click", function() {
         })
         .then(function(data) {
 
-            //error handling
+            // check if city exists
             if(data.code !== 200) {
                 statusText.textContent = "City not found";
-                result;
+                weatherIcon.src = "";
+                return;
             }
-            
+
+            // get data from API
             const temperatur = data.main.temp;
             const condition = data.weather[0].main;
+            const iconCode = data.weather[0].icon;
+
+            // icon URL
+            const iconUrl = "https://openweathermap.org/img/wn/"
+                + iconcode + "@2x.png";
 
             //update UI
             cityName.textConten = "City: " + city;
             temperatureEl.textContent = "Temperature: " + temperature + "°C";
             conditionEl.textContent = "Condition: " + condition;
+            weatherIcon.src = iconUrl;
 
             // improve UX
             statusText.textConten = "";
@@ -50,6 +61,7 @@ searchBtn.addEventListener("click", function() {
         })
         .catch(function () {
             statusText.textContent = "Error fetching data";
+            weatherIcon.src = "";
         });
 
   // allow Enter key to trigger search

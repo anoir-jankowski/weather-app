@@ -31,3 +31,8 @@ button {
     margin: 5px 0;
     font-size: 18px;
 }
+
+#weatherIcon {
+    margin-top: 10px;
+    width: 80px;
+}

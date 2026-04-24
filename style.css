@@ -14,13 +14,23 @@ body {
 
 input {
     padding: 10px;
-    margin: 10px;
+    margin: 10px 0;
     width: 80%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 button {
     padding: 10px;
     cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
 }
 
 #weatherResult {

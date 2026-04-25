@@ -33,7 +33,7 @@ searchBtn.addEventListener("click", function() {
         .then(function(data) {
 
             // check if city exists
-            if(data.code !== 200) {
+            if(data.cod !== 200) {
                 statusText.textContent = "City not found";
                 weatherIcon.src = "";
                 return;
@@ -46,7 +46,7 @@ searchBtn.addEventListener("click", function() {
 
             // icon URL
             const iconUrl = "https://openweathermap.org/img/wn/"
-                + iconcode + "@2x.png";
+                + iconCode + "@2x.png";
 
             //update UI
             cityName.textConten = "City: " + city;

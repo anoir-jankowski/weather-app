@@ -51,7 +51,7 @@ searchBtn.addEventListener("click", function () {
             const condition = data.weather[0].main;
             const iconCode = data.weather[0].icon;
             const iconUrl =
-                "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+                "https://openweathermap.org/img/wn/" + iconCode + ".png";
 
             // update UI
             cityName.textContent = "City: " + data.name;

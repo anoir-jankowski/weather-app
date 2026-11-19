@@ -81,5 +81,3 @@ cityInput.addEventListener("keydown", function (event) {
         searchBtn.click();
     }
 });
-
-});

@@ -9,15 +9,14 @@ A simple weather application built with JavaScript that fetches real-time weathe
 - Search for any city
 - Display real-time weather data
 - Show temperature in Celsius
-- Show weather condition
-- Display weather icon
+- Display numerical weather condition code 
 - Handle invalid input and errors
 
 ## Technologies
 - HTML
 - CSS
 - JavaScript
-- OpenWeatherMap API
+- Open-Meteo API
 
 ## How to use
 1. Enter a city name in the input field
@@ -37,6 +36,7 @@ Finished – basic weather app with API integration
 ## Setup
 1. Clone the repository
 2. Open `index.html` in your browser
+3. No API key required. Weather data is provided by Open-Meteo.
 
 ## Notes
 This project was built as part of my preparation for studying Computer Science.

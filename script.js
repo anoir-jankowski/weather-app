@@ -1,4 +1,3 @@
-console.log("JS loaded");
 
 const cityInput = document.getElementById("cityInput");
 const searchBtn = document.getElementById("searchBtn");
@@ -8,72 +7,79 @@ const temperatureEl = document.getElementById("temperature");
 const conditionEl = document.getElementById("condition");
 const weatherIcon = document.getElementById("weatherIcon");
 
-const apiKey = "c422c5dbd472f674d49215745cf062be";
-
 searchBtn.addEventListener("click", function () {
-    console.log("Button clicked");
-
     const city = cityInput.value.trim();
 
-    // check if input is empty
     if (city === "") {
         statusText.textContent = "Please enter a city";
-        weatherIcon.src = "";
         return;
     }
 
     statusText.textContent = "Loading...";
-    weatherIcon.src = "";
 
-    // API URL
     const url =
-        "https://api.openweathermap.org/data/2.5/weather?q=" +
-        city +
-        "&units=metric&appid=" +
-        apiKey;
+        "https://geocoding-api.open-meteo.com/v1/search?name=" +
+        encodeURIComponent(city) + "&count=1";
 
-    // fetch gets data from web
     fetch(url)
         .then(function (response) {
+            if (!response.ok) {
+                throw new Error("Location request failed");
+            }
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
-
-            // check if city exists
-            if (Number(data.cod) !== 200) {
-                statusText.textContent = "City not found";
-                return;
+            if (!data.results || data.results.length === 0) {
+                throw new Error("City not found");
             }
 
-            // get data from API
-            const temperature = data.main.temp;
-            const condition = data.weather[0].main;
-            const iconCode = data.weather[0].icon;
-            const iconUrl =
-                "https://openweathermap.org/img/wn/" + iconCode + ".png";
+            const location = data.results[0];
 
-            // update UI
-            cityName.textContent = "City: " + data.name;
-            temperatureEl.textContent = "Temperature: " + temperature + "°C";
-            conditionEl.textContent = "Condition: " + condition;
-            weatherIcon.src = iconUrl;
+            const weatherUrl =
+                "https://api.open-meteo.com/v1/forecast?latitude=" +
+                location.latitude +
+                "&longitude=" + location.longitude +
+                "&current=temperature_2m,weather_code";
 
-            // improve UX
+            return fetch(weatherUrl);
+        })
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error("Weather request failed");
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            const temperature = data.current.temperature_2m;
+            const weatherCode = data.current.weather_code;
+
+            cityName.textContent = "City: " + city;
+            temperatureEl.textContent =
+                "Temperature: " + temperature + "°C";
+            conditionEl.textContent =
+                "Weather code: " + weatherCode;
+
+            weatherIcon.removeAttribute("src");
             statusText.textContent = "";
+
             cityInput.value = "";
             cityInput.focus();
         })
         .catch(function (error) {
             console.log(error);
-            statusText.textContent = "Error fetching data";
-            weatherIcon.src = "";
+            statusText.textContent = "Could not find weather data";
+
+            cityName.textContent = "";
+            temperatureEl.textContent = "";
+            conditionEl.textContent = "";
+            weatherIcon.removeAttribute("src");
         });
 });
 
-// allow Enter key to trigger search
-cityInput.addEventListener("keypress", function (event) {
+cityInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
         searchBtn.click();
     }
+});
+
 });
